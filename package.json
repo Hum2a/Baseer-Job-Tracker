@@ -18,6 +18,7 @@
     "db:migrate": "npm run db:migrate --workspace=@docket/api",
     "db:seed": "npm run db:seed --workspace=@docket/api",
     "db:rls:check": "npm run db:rls:check --workspace=@docket/api",
+    "data:import": "node scripts/import-applications.mjs",
     "cf:secrets": "node scripts/cf-secrets.mjs",
     "publish:staging": "node scripts/publish.mjs staging",
     "publish:production": "node scripts/publish.mjs production",

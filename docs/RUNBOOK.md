@@ -23,6 +23,7 @@ npm run dev
 | E2E | `npm run test:e2e` |
 | Env sanity | `npm run doctor` |
 | Sync agent rules | `npm run rules:sync` |
+| Import applications | `npm run data:import -- <file.json>` ([DATA_IMPORT.md](./DATA_IMPORT.md)) |
 | Full gate | `npm run ship-it` |
 
 ## R2

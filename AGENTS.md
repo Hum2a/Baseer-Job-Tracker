@@ -67,6 +67,15 @@ npm run cf:secrets -- production     # push DATABASE_URL from .env
 npm run publish:production           # secrets + deploy api/web + migrate/seed
 ```
 
+## Import applications (Claude Cowork / scripts)
+
+```powershell
+$env:DOCKET_API_URL = "https://docket-api.humzab1711.workers.dev"
+npm run data:import -- path/to/apps.json
+```
+
+Full guide: [docs/DATA_IMPORT.md](docs/DATA_IMPORT.md) · example: [examples/applications.import.json](examples/applications.import.json).
+
 ## Verification
 
 ```bash

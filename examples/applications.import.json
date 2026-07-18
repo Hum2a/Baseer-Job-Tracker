@@ -1,0 +1,30 @@
+{
+  "applications": [
+    {
+      "company": "Example Corp",
+      "roleTitle": "Frontend Engineer",
+      "location": "Remote",
+      "jobUrl": "https://example.com/jobs/123",
+      "status": "applied",
+      "appliedDate": "2026-07-10",
+      "salaryRange": "£60k–£75k",
+      "source": "LinkedIn",
+      "notes": [
+        "Applied via careers page",
+        "Recruiter: Sam (sam@example.com)"
+      ],
+      "reminders": [
+        {
+          "dueDate": "2026-07-20",
+          "message": "Follow up if no reply"
+        }
+      ]
+    },
+    {
+      "company": "Startup Ltd",
+      "roleTitle": "Full Stack Developer",
+      "status": "wishlist",
+      "source": "Referral"
+    }
+  ]
+}
