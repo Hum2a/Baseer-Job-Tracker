@@ -33,18 +33,21 @@ export function DocumentUploader({
   };
 
   return (
-    <section className="space-y-4">
+    <section className="enter-up delay-2 space-y-4">
       <h2 className="font-display text-xl">Documents</h2>
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="surface flex flex-wrap items-center gap-2 p-4">
         <select
-          className="rounded-md border border-[var(--color-line)] bg-white px-3 py-2 text-sm"
+          className="rounded-md border border-[var(--color-line)] bg-white px-3 py-2 text-sm transition-[border-color,box-shadow,transform] duration-[var(--duration)] ease-[var(--ease-out-soft)] hover:border-[color-mix(in_srgb,var(--color-accent)_35%,var(--color-line))] focus:border-[var(--color-accent)] focus:outline-none"
           value={type}
           onChange={(e) => setType(e.target.value as DocumentType)}
         >
           <option value="resume">Resume</option>
           <option value="cover_letter">Cover letter</option>
         </select>
-        <label className="inline-flex cursor-pointer items-center rounded-md border border-[var(--color-line)] bg-white px-3 py-2 text-sm hover:bg-[var(--color-surface)]">
+        <label
+          className="inline-flex cursor-pointer items-center rounded-md border border-[var(--color-line)] bg-white px-3 py-2 text-sm transition-[background-color,transform,border-color] duration-[var(--duration)] ease-[var(--ease-out-soft)] hover:-translate-y-px hover:border-[color-mix(in_srgb,var(--color-accent)_30%,var(--color-line))] hover:bg-[var(--color-surface)] active:scale-[0.97]"
+          data-interactive
+        >
           {busy ? "Uploading…" : "Upload file"}
           <input
             type="file"
@@ -62,11 +65,12 @@ export function DocumentUploader({
       ) : documents.length === 0 ? (
         <p className="text-sm text-[var(--color-ink-muted)]">No documents uploaded.</p>
       ) : (
-        <ul className="space-y-2">
+        <ul className="stagger-fast space-y-2">
           {documents.map((doc) => (
             <li
               key={doc.id}
-              className="flex items-center justify-between gap-3 rounded-lg border border-[var(--color-line)] bg-white px-3 py-2"
+              className="surface flex items-center justify-between gap-3 px-3 py-2"
+              data-interactive
             >
               <div>
                 <p className="text-sm font-medium">{doc.filename}</p>

@@ -6,9 +6,9 @@ export function SettingsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
+      <div className="enter-up">
         <h2 className="font-display text-2xl">Settings</h2>
-        <p className="mt-1 text-sm text-[var(--color-ink-muted)]">
+        <p className="enter-fade delay-1 mt-1 text-sm text-[var(--color-ink-muted)]">
           General document templates (no login — single-owner instance).
         </p>
       </div>

@@ -20,8 +20,8 @@ export function StatsPage() {
 
   return (
     <div className="space-y-6">
-      <h2 className="font-display text-2xl">Stats</h2>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <h2 className="enter-up font-display text-2xl">Stats</h2>
+      <div className="stagger-in grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Stat tile="Total" value={String(stats.total)} />
         <Stat tile="Open pipeline" value={String(stats.openPipeline)} />
         <Stat tile="Avg / week" value={String(stats.avgPerWeek)} />
@@ -30,7 +30,7 @@ export function StatsPage() {
           <Stat key={s} tile={s} value={String(stats.byStatus[s] ?? 0)} />
         ))}
       </div>
-      <div className="rounded-xl border border-[var(--color-line)] bg-white p-4">
+      <div className="surface enter-up delay-2 p-4">
         <h3 className="mb-2 text-sm font-semibold">Conversion funnel</h3>
         <p className="text-sm text-[var(--color-ink-muted)]">
           Applied → Interview: {stats.funnel.appliedToInterviewPct}% · Interview →
@@ -45,9 +45,9 @@ export function StatsPage() {
 
 function Stat({ tile, value }: { tile: string; value: string }) {
   return (
-    <div className="rounded-xl border border-[var(--color-line)] bg-white px-4 py-3">
+    <div className="surface px-4 py-3" data-interactive>
       <p className="text-xs uppercase tracking-wide text-[var(--color-ink-muted)]">{tile}</p>
-      <p className="font-display text-3xl">{value}</p>
+      <p className="font-display text-3xl tabular-nums">{value}</p>
     </div>
   );
 }

@@ -53,17 +53,19 @@ function Column({
     <div
       ref={setNodeRef}
       className={cn(
-        "flex min-w-[260px] flex-1 flex-col rounded-xl p-3",
+        "enter-up flex min-w-[260px] flex-1 flex-col rounded-xl p-3 transition-[box-shadow,transform,ring] duration-[var(--duration)] ease-[var(--ease-out-soft)]",
         colBg[status],
-        isOver && "ring-2 ring-[var(--color-accent)]",
+        isOver && "ring-2 ring-[var(--color-accent)] scale-[1.01] shadow-md",
       )}
     >
       <div className="mb-3 flex items-center justify-between px-1">
         <h3 className="text-sm font-semibold tracking-wide">{label}</h3>
-        <span className="text-xs text-[var(--color-ink-muted)]">{items.length}</span>
+        <span className="text-xs text-[var(--color-ink-muted)] transition-transform duration-[var(--duration-fast)]">
+          {items.length}
+        </span>
       </div>
       <SortableContext items={items.map((i) => i.id)} strategy={verticalListSortingStrategy}>
-        <div className="flex flex-col gap-2">
+        <div className="stagger-fast flex flex-col gap-2">
           {items.map((app) => (
             <KanbanCard
               key={app.id}
@@ -114,7 +116,7 @@ export function KanbanBoard({ applications, reminders, onStatusChange, onDelete 
 
   if (applications.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed border-[var(--color-line)] bg-white/60 px-6 py-16 text-center">
+      <div className="enter-scale rounded-xl border border-dashed border-[var(--color-line)] bg-white/60 px-6 py-16 text-center">
         <p className="font-display text-2xl">No applications yet</p>
         <p className="mt-2 text-sm text-[var(--color-ink-muted)]">
           Add a role to start tracking your pipeline.
@@ -130,7 +132,7 @@ export function KanbanBoard({ applications, reminders, onStatusChange, onDelete 
       onDragStart={onDragStart}
       onDragEnd={(e) => void onDragEnd(e)}
     >
-      <div className="flex gap-3 overflow-x-auto pb-2">
+      <div className="stagger-in flex gap-3 overflow-x-auto pb-2">
         {KANBAN_COLUMNS.map((col) => (
           <Column
             key={col.status}

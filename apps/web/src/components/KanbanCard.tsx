@@ -31,16 +31,18 @@ export function KanbanCard({ application, reminders, onDelete }: Props) {
       ref={setNodeRef}
       style={style}
       className={cn(
-        "rounded-lg border border-[var(--color-line)] bg-[var(--color-panel)] p-3 shadow-sm",
-        isDragging && "opacity-70 ring-2 ring-[var(--color-accent)]",
+        "surface enter-scale cursor-grab rounded-lg p-3 shadow-sm active:cursor-grabbing",
+        "hover:-translate-y-0.5 hover:shadow-md",
+        isDragging && "opacity-70 ring-2 ring-[var(--color-accent)] shadow-lg scale-[1.02]",
       )}
+      data-interactive
       {...attributes}
       {...listeners}
     >
       <Link
         to="/applications/$id"
         params={{ id: application.id }}
-        className="block"
+        className="link-soft block"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-2">
@@ -55,7 +57,7 @@ export function KanbanCard({ application, reminders, onDelete }: Props) {
             </p>
           </div>
           {dueSoon ? (
-            <span className="shrink-0 rounded bg-[var(--color-warn-soft)] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--color-warn)]">
+            <span className="enter-fade shrink-0 rounded bg-[var(--color-warn-soft)] px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--color-warn)]">
               Due
             </span>
           ) : null}
@@ -73,7 +75,7 @@ export function KanbanCard({ application, reminders, onDelete }: Props) {
       {onDelete ? (
         <button
           type="button"
-          className="mt-2 text-xs text-[var(--color-danger)] hover:underline"
+          className="mt-2 text-xs text-[var(--color-danger)] transition-opacity hover:underline hover:opacity-80 active:scale-95"
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();

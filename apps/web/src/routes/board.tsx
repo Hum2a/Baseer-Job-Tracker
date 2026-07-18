@@ -37,7 +37,7 @@ export function BoardPage() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="enter-up flex flex-wrap items-center justify-between gap-3">
         <h2 className="font-display text-2xl">Kanban</h2>
         <Button onClick={() => setOpen((v) => !v)}>
           {open ? "Cancel" : "Add application"}
@@ -46,7 +46,7 @@ export function BoardPage() {
       {open ? (
         <form
           onSubmit={(e) => void onCreate(e)}
-          className="grid gap-2 rounded-xl border border-[var(--color-line)] bg-white p-4 sm:grid-cols-2 lg:grid-cols-5"
+          className="surface enter-scale stagger-in grid gap-2 p-4 sm:grid-cols-2 lg:grid-cols-5"
         >
           <Input
             placeholder="Company"

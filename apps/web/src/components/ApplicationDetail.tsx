@@ -83,13 +83,13 @@ export function ApplicationDetail({ applicationId }: Props) {
 
   return (
     <div className="space-y-8">
-      <header className="flex flex-wrap items-start justify-between gap-4">
+      <header className="enter-up flex flex-wrap items-start justify-between gap-4">
         <div className="space-y-3">
-          <p className="text-sm uppercase tracking-[0.2em] text-[var(--color-ink-muted)]">
+          <p className="enter-fade text-sm uppercase tracking-[0.2em] text-[var(--color-ink-muted)]">
             Application
           </p>
           <h1 className="font-display text-3xl md:text-4xl">{app.company}</h1>
-          <p className="text-lg text-[var(--color-ink-muted)]">
+          <p className="enter-fade delay-1 text-lg text-[var(--color-ink-muted)]">
             {app.roleTitle}
             {app.industry ? ` · ${app.industry}` : ""}
           </p>
@@ -105,7 +105,7 @@ export function ApplicationDetail({ applicationId }: Props) {
       </header>
 
       <form
-        className="grid gap-3 md:grid-cols-2"
+        className="surface stagger-in grid gap-3 p-4 md:grid-cols-2"
         onSubmit={(e) => {
           e.preventDefault();
           const fd = new FormData(e.currentTarget);
@@ -151,7 +151,7 @@ export function ApplicationDetail({ applicationId }: Props) {
           <select
             name="status"
             defaultValue={app.status}
-            className="w-full rounded-md border border-[var(--color-line)] bg-white px-3 py-2 text-sm"
+            className="w-full rounded-md border border-[var(--color-line)] bg-white px-3 py-2 text-sm transition-[border-color,box-shadow,transform] duration-[var(--duration)] ease-[var(--ease-out-soft)] hover:border-[color-mix(in_srgb,var(--color-accent)_35%,var(--color-line))] focus:border-[var(--color-accent)] focus:outline-none focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-accent)_22%,transparent)]"
           >
             {applicationStatuses.map((s) => (
               <option key={s} value={s}>

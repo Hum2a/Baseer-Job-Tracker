@@ -117,9 +117,12 @@ export function ApplicationTable({ applications, onDelete }: Props) {
     }
   };
 
+  const selectClass =
+    "rounded-md border border-[var(--color-line)] bg-white px-3 py-2 text-sm transition-[border-color,box-shadow,transform,background-color] duration-[var(--duration)] ease-[var(--ease-out-soft)] hover:border-[color-mix(in_srgb,var(--color-accent)_35%,var(--color-line))] focus:border-[var(--color-accent)] focus:outline-none focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-accent)_22%,transparent)] active:scale-[0.995]";
+
   return (
     <div className="space-y-4">
-      <div className="grid gap-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="stagger-in grid gap-2 md:grid-cols-3 lg:grid-cols-6">
         <Input
           placeholder="Search company, position, industry…"
           value={q}
@@ -127,7 +130,7 @@ export function ApplicationTable({ applications, onDelete }: Props) {
           className="md:col-span-2 lg:col-span-2"
         />
         <select
-          className="rounded-md border border-[var(--color-line)] bg-white px-3 py-2 text-sm"
+          className={selectClass}
           value={status}
           onChange={(e) => setStatus(e.target.value as ApplicationStatus | "all")}
         >
@@ -139,7 +142,7 @@ export function ApplicationTable({ applications, onDelete }: Props) {
           ))}
         </select>
         <select
-          className="rounded-md border border-[var(--color-line)] bg-white px-3 py-2 text-sm"
+          className={selectClass}
           value={industry}
           onChange={(e) => setIndustry(e.target.value)}
         >
@@ -151,7 +154,7 @@ export function ApplicationTable({ applications, onDelete }: Props) {
           ))}
         </select>
         <select
-          className="rounded-md border border-[var(--color-line)] bg-white px-3 py-2 text-sm"
+          className={selectClass}
           value={position}
           onChange={(e) => setPosition(e.target.value)}
         >
@@ -169,11 +172,11 @@ export function ApplicationTable({ applications, onDelete }: Props) {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-[var(--color-line)] bg-white/60 px-6 py-12 text-center text-sm text-[var(--color-ink-muted)]">
+        <div className="enter-scale rounded-xl border border-dashed border-[var(--color-line)] bg-white/60 px-6 py-12 text-center text-sm text-[var(--color-ink-muted)]">
           No applications match these filters.
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-[var(--color-line)] bg-white">
+        <div className="enter-up overflow-x-auto rounded-xl border border-[var(--color-line)] bg-white shadow-sm">
           <table className="min-w-full text-left text-sm">
             <thead className="border-b border-[var(--color-line)] bg-[var(--color-surface)] text-[var(--color-ink-muted)]">
               <tr>
@@ -182,7 +185,7 @@ export function ApplicationTable({ applications, onDelete }: Props) {
                     <button
                       type="button"
                       className={cn(
-                        "hover:text-[var(--color-ink)]",
+                        "rounded px-1 py-0.5 hover:bg-black/5 hover:text-[var(--color-ink)] active:scale-95",
                         sortKey === key && "text-[var(--color-ink)]",
                       )}
                       onClick={() => toggleSort(key)}
@@ -195,14 +198,17 @@ export function ApplicationTable({ applications, onDelete }: Props) {
                 <th className="px-3 py-2 font-medium">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="stagger-fast">
               {filtered.map((row) => (
-                <tr key={row.id} className="border-b border-[var(--color-line)] last:border-0">
+                <tr
+                  key={row.id}
+                  className="table-row-interactive border-b border-[var(--color-line)] last:border-0"
+                >
                   <td className="px-3 py-2.5 font-medium">
                     <Link
                       to="/applications/$id"
                       params={{ id: row.id }}
-                      className="text-[var(--color-accent)] hover:underline"
+                      className="link-soft text-[var(--color-accent)]"
                     >
                       {row.company}
                     </Link>
@@ -226,7 +232,7 @@ export function ApplicationTable({ applications, onDelete }: Props) {
                       <Link
                         to="/applications/$id"
                         params={{ id: row.id }}
-                        className="text-sm text-[var(--color-accent)] hover:underline"
+                        className="link-soft text-sm text-[var(--color-accent)]"
                       >
                         Edit
                       </Link>

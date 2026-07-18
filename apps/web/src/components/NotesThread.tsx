@@ -27,9 +27,9 @@ export function NotesThread({ notes, loading, onAdd, onDelete }: Props) {
   };
 
   return (
-    <section className="space-y-4">
+    <section className="enter-up space-y-4">
       <h2 className="font-display text-xl">Notes</h2>
-      <form onSubmit={(e) => void submit(e)} className="space-y-2">
+      <form onSubmit={(e) => void submit(e)} className="surface space-y-2 p-4">
         <Textarea
           rows={3}
           placeholder="Add a note…"
@@ -45,11 +45,12 @@ export function NotesThread({ notes, loading, onAdd, onDelete }: Props) {
       ) : notes.length === 0 ? (
         <p className="text-sm text-[var(--color-ink-muted)]">No notes yet.</p>
       ) : (
-        <ul className="space-y-3">
+        <ul className="stagger-fast space-y-3">
           {notes.map((note) => (
             <li
               key={note.id}
-              className="rounded-lg border border-[var(--color-line)] bg-white p-3"
+              className="surface surface-quiet p-3"
+              data-interactive
             >
               <div className="mb-1 flex items-center justify-between gap-2">
                 <time className="text-xs text-[var(--color-ink-muted)]">

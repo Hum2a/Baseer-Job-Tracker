@@ -14,16 +14,16 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="mx-auto min-h-screen max-w-7xl px-4 py-6 md:px-6">
-      <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <Link to="/" className="font-display text-4xl tracking-tight md:text-5xl">
+      <header className="enter-up mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div className="enter-slide-right">
+          <Link to="/" className="brand-mark font-display text-4xl tracking-tight md:text-5xl">
             Docket
           </Link>
-          <p className="mt-1 text-sm text-[var(--color-ink-muted)]">
+          <p className="enter-fade delay-1 mt-1 text-sm text-[var(--color-ink-muted)]">
             Job application tracker
           </p>
         </div>
-        <nav className="flex gap-1 rounded-lg border border-[var(--color-line)] bg-white/80 p-1">
+        <nav className="enter-scale delay-2 flex gap-1 rounded-lg border border-[var(--color-line)] bg-white/80 p-1 shadow-sm backdrop-blur-sm">
           {nav.map((item) => {
             const active =
               item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
@@ -32,10 +32,10 @@ export function AppShell({ children }: { children: ReactNode }) {
                 key={item.to}
                 to={item.to}
                 className={cn(
-                  "rounded-md px-3 py-1.5 text-sm transition",
+                  "nav-pill rounded-md px-3 py-1.5 text-sm",
                   active
-                    ? "bg-[var(--color-accent)] text-white"
-                    : "text-[var(--color-ink-muted)] hover:bg-black/5",
+                    ? "nav-pill-active bg-[var(--color-accent)] text-white"
+                    : "text-[var(--color-ink-muted)]",
                 )}
               >
                 {item.label}
@@ -44,7 +44,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           })}
         </nav>
       </header>
-      <main>{children}</main>
+      <main key={pathname} className="page-enter">
+        {children}
+      </main>
     </div>
   );
 }

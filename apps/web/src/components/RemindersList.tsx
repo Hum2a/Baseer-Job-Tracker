@@ -38,9 +38,12 @@ export function RemindersList({
   };
 
   return (
-    <section className="space-y-4">
+    <section className="enter-up delay-1 space-y-4">
       <h2 className="font-display text-xl">Reminders</h2>
-      <form onSubmit={(e) => void submit(e)} className="grid gap-2 sm:grid-cols-[1fr_2fr_auto]">
+      <form
+        onSubmit={(e) => void submit(e)}
+        className="surface stagger-in grid gap-2 p-4 sm:grid-cols-[1fr_2fr_auto]"
+      >
         <Input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} required />
         <Input
           placeholder="Reminder message"
@@ -57,16 +60,17 @@ export function RemindersList({
       ) : reminders.length === 0 ? (
         <p className="text-sm text-[var(--color-ink-muted)]">No reminders.</p>
       ) : (
-        <ul className="space-y-2">
+        <ul className="stagger-fast space-y-2">
           {reminders.map((r) => {
             const due = isReminderDueSoon(r.dueDate, r.completed);
             return (
               <li
                 key={r.id}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg border border-[var(--color-line)] bg-white px-3 py-2",
+                  "surface flex items-center gap-3 px-3 py-2",
                   due && "border-[var(--color-warn)] bg-[var(--color-warn-soft)]/40",
                 )}
+                data-interactive
               >
                 <input
                   type="checkbox"

@@ -32,8 +32,8 @@ export function StatsCharts({ stats }: Props) {
   ];
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      <div className="rounded-xl border border-[var(--color-line)] bg-white p-4">
+    <div className="stagger-in grid gap-6 lg:grid-cols-2">
+      <div className="surface p-4" data-interactive>
         <h3 className="mb-4 text-sm font-semibold">Status breakdown</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
@@ -49,7 +49,7 @@ export function StatsCharts({ stats }: Props) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--color-line)] bg-white p-4">
+      <div className="surface p-4" data-interactive>
         <h3 className="mb-4 text-sm font-semibold">Reminder health</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
@@ -64,7 +64,7 @@ export function StatsCharts({ stats }: Props) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--color-line)] bg-white p-4">
+      <div className="surface p-4" data-interactive>
         <h3 className="mb-4 text-sm font-semibold">By industry</h3>
         <div className="h-64">
           {stats.byIndustry.length === 0 ? (
@@ -88,7 +88,7 @@ export function StatsCharts({ stats }: Props) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--color-line)] bg-white p-4">
+      <div className="surface p-4" data-interactive>
         <h3 className="mb-4 text-sm font-semibold">By source</h3>
         <div className="h-64">
           {stats.bySource.length === 0 ? (
@@ -112,7 +112,7 @@ export function StatsCharts({ stats }: Props) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--color-line)] bg-white p-4">
+      <div className="surface p-4" data-interactive>
         <h3 className="mb-4 text-sm font-semibold">Applications per week</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
@@ -127,7 +127,7 @@ export function StatsCharts({ stats }: Props) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--color-line)] bg-white p-4">
+      <div className="surface p-4" data-interactive>
         <h3 className="mb-4 text-sm font-semibold">Applications per month</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">

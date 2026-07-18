@@ -6,7 +6,7 @@ export function ListPage() {
 
   return (
     <div className="space-y-4">
-      <h2 className="font-display text-2xl">List</h2>
+      <h2 className="enter-up font-display text-2xl">List</h2>
       {error ? <p className="text-sm text-[var(--color-danger)]">{error}</p> : null}
       {loading ? (
         <p className="text-sm text-[var(--color-ink-muted)]">Loading…</p>
