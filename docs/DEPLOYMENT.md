@@ -11,18 +11,20 @@
 | App | `jobtracker-staging.baseer.co.uk` | `jobtracker.baseer.co.uk` |
 | API | `jobtracker-api-staging.baseer.co.uk` | `jobtracker-api.baseer.co.uk` |
 
-## DNS
+## DNS / custom domains
 
-On the `baseer.co.uk` Cloudflare zone (the new account), add:
+1. Ensure `baseer.co.uk` is an active zone on the **same** Cloudflare account Wrangler uses (`wrangler whoami`).
+2. Deploy Workers/Pages first (custom domains are **not** in `wrangler.toml` routes — that fails if the zone is missing).
+3. In the dashboard, attach custom domains:
 
 | Hostname | Target |
 |---|---|
 | `jobtracker.baseer.co.uk` | Pages project (production) |
 | `jobtracker-staging.baseer.co.uk` | Pages project (staging) |
-| `jobtracker-api.baseer.co.uk` | Worker custom domain (production) |
-| `jobtracker-api-staging.baseer.co.uk` | Worker custom domain (staging) |
+| `jobtracker-api.baseer.co.uk` | Worker `docket-api` (production) |
+| `jobtracker-api-staging.baseer.co.uk` | Worker `docket-api-staging` |
 
-Attach each as a custom domain on the corresponding Pages/Workers project so Universal SSL covers them. Use single-level subdomains only (avoid `api.jobtracker.baseer.co.uk`).
+Use single-level subdomains only (avoid `api.jobtracker.baseer.co.uk`).
 
 ## Commands
 

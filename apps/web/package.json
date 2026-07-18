@@ -10,8 +10,8 @@
     "test": "vitest run --passWithNoTests",
     "test:e2e": "playwright test",
     "preview": "vite preview",
-    "deploy:staging": "wrangler pages deploy dist --project-name=docket-web-staging",
-    "deploy:production": "wrangler pages deploy dist --project-name=docket-web"
+    "deploy:staging": "vite build --mode staging && wrangler pages deploy dist --project-name=docket-web-staging",
+    "deploy:production": "vite build --mode production && wrangler pages deploy dist --project-name=docket-web"
   },
   "dependencies": {
     "@docket/shared": "*",
