@@ -14,6 +14,9 @@ function corsOrigin(origin: string | undefined, appUrl: string): string {
     appUrl,
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://docket.baseer.co.uk",
+    "https://docket-staging.baseer.co.uk",
+    // legacy names from earlier deploy config
     "https://jobtracker.baseer.co.uk",
     "https://jobtracker-staging.baseer.co.uk",
   ]);

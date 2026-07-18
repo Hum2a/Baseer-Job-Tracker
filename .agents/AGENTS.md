@@ -6,7 +6,7 @@ Single source of truth for coding agents working on Docket.
 
 Docket is a personal job application tracker for Baseer. Single-owner instance (no login), own Neon DB, own Cloudflare deployment. No billing, no multi-tenant licensing.
 
-**Domains (zone `baseer.co.uk`):** app `jobtracker.baseer.co.uk` / `jobtracker-staging.baseer.co.uk`; API `jobtracker-api.baseer.co.uk` / `jobtracker-api-staging.baseer.co.uk`. Single-level subdomains on the zone (free Universal SSL wildcard).
+**Domains (zone `baseer.co.uk`):** app `docket.baseer.co.uk` / `docket-staging.baseer.co.uk`; API `docket-api.humzab1711.workers.dev` (custom: `docket-api.baseer.co.uk` when attached).
 
 ## Stack
 
@@ -47,8 +47,8 @@ docs/             ARCHITECTURE, RLS, DEPLOYMENT, RUNBOOK
 | Branch | `develop` | `main` (tag `v*`) |
 | Neon | `staging` | `main` |
 | R2 | `docket-documents-staging` | `docket-documents` |
-| App | `jobtracker-staging.baseer.co.uk` | `jobtracker.baseer.co.uk` |
-| API | `jobtracker-api-staging.baseer.co.uk` | `jobtracker-api.baseer.co.uk` |
+| App | `docket-staging.baseer.co.uk` | `docket.baseer.co.uk` |
+| API | `docket-api-staging` Worker | `docket-api.humzab1711.workers.dev` |
 
 ## Local setup
 

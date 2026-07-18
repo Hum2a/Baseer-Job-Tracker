@@ -6,8 +6,8 @@ alwaysApply: false
 
 # Deployment
 
-- Staging: branch `develop` → `jobtracker-staging.baseer.co.uk` / `jobtracker-api-staging.baseer.co.uk`
-- Production: tag `v*` → `jobtracker.baseer.co.uk` / `jobtracker-api.baseer.co.uk`
+- Staging: branch `develop` → `docket-staging.baseer.co.uk` / staging API Worker
+- Production: tag `v*` → `docket.baseer.co.uk` / `docket-api.humzab1711.workers.dev`
 - R2: `docket-documents-staging` / `docket-documents` — never public; presigned URLs only via `lib/r2.ts`
-- Cookie domain must match app host (`jobtracker.baseer.co.uk` / `jobtracker-staging.baseer.co.uk`) for Pages/Workers session sharing
+- CORS `APP_URL` must match the live Pages host (`https://docket.baseer.co.uk`)
 - Document ops in `docs/DEPLOYMENT.md` and `docs/RUNBOOK.md`
