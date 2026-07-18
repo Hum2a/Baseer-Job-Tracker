@@ -22,9 +22,8 @@ preview_bucket_name = "docket-documents-dev"
 
 [env.staging]
 name = "docket-api-staging"
-vars = { APP_URL = "https://jobtracker-staging.baseer.co.uk", API_URL = "https://jobtracker-api-staging.baseer.co.uk", OWNER_ID = "seed-user-baseer" }
-# Custom domain: attach jobtracker-api-staging.baseer.co.uk in the dashboard
-# after baseer.co.uk is on this Cloudflare account (wrangler routes fail otherwise).
+vars = { APP_URL = "https://docket-staging.baseer.co.uk", API_URL = "https://docket-api-staging.baseer.co.uk", OWNER_ID = "seed-user-baseer" }
+# Custom domain: attach docket-api-staging.baseer.co.uk in the dashboard when ready.
 
 [[env.staging.r2_buckets]]
 binding = "DOCUMENTS"
@@ -36,10 +35,9 @@ bucket_name = "docket-documents-staging"
 
 [env.production]
 name = "docket-api"
-# API_URL is the live Worker URL until jobtracker-api.baseer.co.uk is attached.
-vars = { APP_URL = "https://jobtracker.baseer.co.uk", API_URL = "https://docket-api.humzab1711.workers.dev", OWNER_ID = "seed-user-baseer" }
-# Custom domain: attach jobtracker-api.baseer.co.uk in the dashboard
-# after baseer.co.uk is on this Cloudflare account (wrangler routes fail otherwise).
+# API_URL stays on workers.dev until docket-api.baseer.co.uk is attached.
+vars = { APP_URL = "https://docket.baseer.co.uk", API_URL = "https://docket-api.humzab1711.workers.dev", OWNER_ID = "seed-user-baseer" }
+# Custom domain: attach docket-api.baseer.co.uk in the dashboard when ready.
 
 [[env.production.r2_buckets]]
 binding = "DOCUMENTS"

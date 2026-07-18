@@ -8,8 +8,8 @@
 | Neon | `staging` branch | `main` branch |
 | Worker | `[env.staging]` | `[env.production]` |
 | R2 | `docket-documents-staging` | `docket-documents` |
-| App | `jobtracker-staging.baseer.co.uk` | `jobtracker.baseer.co.uk` |
-| API | `jobtracker-api-staging.baseer.co.uk` | `jobtracker-api.baseer.co.uk` |
+| App | `docket-staging.baseer.co.uk` | `docket.baseer.co.uk` |
+| API | staging Worker / custom domain | `docket-api.humzab1711.workers.dev` |
 
 ## DNS / custom domains
 
@@ -19,12 +19,12 @@
 
 | Hostname | Target |
 |---|---|
-| `jobtracker.baseer.co.uk` | Pages project (production) |
-| `jobtracker-staging.baseer.co.uk` | Pages project (staging) |
-| `jobtracker-api.baseer.co.uk` | Worker `docket-api` (production) |
-| `jobtracker-api-staging.baseer.co.uk` | Worker `docket-api-staging` |
+| `docket.baseer.co.uk` | Pages project (production) |
+| `docket-staging.baseer.co.uk` | Pages project (staging) |
+| `docket-api.baseer.co.uk` | Worker `docket-api` (optional; currently workers.dev) |
+| `docket-api-staging.baseer.co.uk` | Worker `docket-api-staging` |
 
-Use single-level subdomains only (avoid `api.jobtracker.baseer.co.uk`).
+Use single-level subdomains only.
 
 ## Commands
 

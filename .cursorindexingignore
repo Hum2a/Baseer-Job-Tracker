@@ -1,0 +1,41 @@
+# Keep the index lean — skip generated, vendor, and binary-ish noise.
+# (Secrets are also listed so they are never embedded.)
+
+node_modules/
+dist/
+build/
+.turbo/
+.vite/
+.wrangler/
+.cache/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+.nyc_output/
+.mf/
+.cloudflare/
+
+.env
+.env.*
+!.env.example
+!.env.production
+!.env.staging
+.dev.vars
+**/.dev.vars
+
+package-lock.json
+*.tsbuildinfo
+*.log
+*.map
+*.min.js
+*.min.css
+
+# Mirrored agent rule copies (canonical is .cursor/rules + AGENTS.md)
+.claude/rules/
+.agents/rules/
+.agents/AGENTS.md
+
+.git/
+.DS_Store
+Thumbs.db

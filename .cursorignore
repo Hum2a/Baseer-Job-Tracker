@@ -1,0 +1,37 @@
+﻿# Secrets — never pull into chat context
+.env
+.env.*
+!.env.example
+!.env.production
+!.env.staging
+.dev.vars
+**/.dev.vars
+*.pem
+*.key
+credentials.json
+
+# Heavy / generated — low signal for agents
+node_modules/
+dist/
+build/
+.turbo/
+.vite/
+.wrangler/
+.cache/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+.nyc_output/
+*.tsbuildinfo
+*.log
+
+# Lockfile is huge; use package.json for deps
+package-lock.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.git/
