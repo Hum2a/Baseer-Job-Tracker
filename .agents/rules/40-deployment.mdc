@@ -6,8 +6,8 @@ alwaysApply: false
 
 # Deployment
 
-- Staging: branch `develop` → `baseer-staging` / `baseer-api-staging`
-- Production: tag `v*` → `baseer` / `baseer-api`
+- Staging: branch `develop` → `jobtracker-staging.baseer.co.uk` / `jobtracker-api-staging.baseer.co.uk`
+- Production: tag `v*` → `jobtracker.baseer.co.uk` / `jobtracker-api.baseer.co.uk`
 - R2: `docket-documents-staging` / `docket-documents` — never public; presigned URLs only via `lib/r2.ts`
-- Cookie domain must match app host for Pages/Workers session sharing
+- Cookie domain must match app host (`jobtracker.baseer.co.uk` / `jobtracker-staging.baseer.co.uk`) for Pages/Workers session sharing
 - Document ops in `docs/DEPLOYMENT.md` and `docs/RUNBOOK.md`

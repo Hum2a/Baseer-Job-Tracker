@@ -6,7 +6,7 @@ Single source of truth for coding agents working on Docket.
 
 Docket is a personal job application tracker for Baseer. One user, own Neon DB, own auth, own Cloudflare deployment. No billing, no multi-tenant licensing.
 
-**Domains:** `baseer.humza-butt.space` (prod), `baseer-staging.humza-butt.space` (staging). API: `baseer-api.humza-butt.space` / `baseer-api-staging.humza-butt.space`. Single-level CNAMEs only (free Universal SSL wildcard).
+**Domains (zone `baseer.co.uk`):** app `jobtracker.baseer.co.uk` / `jobtracker-staging.baseer.co.uk`; API `jobtracker-api.baseer.co.uk` / `jobtracker-api-staging.baseer.co.uk`. Single-level subdomains on the zone (free Universal SSL wildcard).
 
 ## Stack
 
@@ -25,7 +25,7 @@ Docket is a personal job application tracker for Baseer. One user, own Neon DB, 
 3. All file access through `apps/api/src/lib/r2.ts` — never construct bucket URLs inline.
 4. Every table gets an RLS policy (`owner_id = auth.user_id()`) before any route touches it.
 5. Hyperdrive: pool/reuse connections; do not open a new client per request.
-6. Better Auth cookies: set cookie domain to `baseer.humza-butt.space` / staging equivalent.
+6. Better Auth cookies: set cookie domain to `jobtracker.baseer.co.uk` / `jobtracker-staging.baseer.co.uk`.
 7. Free tier only: no Cloudflare Containers/Queues; no nested subdomains needing Advanced Certificate Manager.
 8. Kanban: optimistic UI on drop, reconcile with server, roll back on failure.
 9. npm scripts use `<domain>:<action>`; bare names only for top-level aggregates.
@@ -47,8 +47,8 @@ docs/             ARCHITECTURE, RLS, DEPLOYMENT, RUNBOOK
 | Branch | `develop` | `main` (tag `v*`) |
 | Neon | `staging` | `main` |
 | R2 | `docket-documents-staging` | `docket-documents` |
-| App | `baseer-staging.humza-butt.space` | `baseer.humza-butt.space` |
-| API | `baseer-api-staging.humza-butt.space` | `baseer-api.humza-butt.space` |
+| App | `jobtracker-staging.baseer.co.uk` | `jobtracker.baseer.co.uk` |
+| API | `jobtracker-api-staging.baseer.co.uk` | `jobtracker-api.baseer.co.uk` |
 
 ## Local setup
 

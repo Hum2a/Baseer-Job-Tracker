@@ -27,7 +27,7 @@ npm run dev
 
 ## Auth cookie issues
 
-If sessions do not stick across Pages/Workers, verify `COOKIE_DOMAIN` matches the app host (`baseer.humza-butt.space` or staging equivalent), not the API host.
+If sessions do not stick across Pages/Workers, verify `COOKIE_DOMAIN` matches the app host (`jobtracker.baseer.co.uk` or `jobtracker-staging.baseer.co.uk`), not the API host.
 
 ## R2
 

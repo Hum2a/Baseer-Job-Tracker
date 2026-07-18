@@ -3,6 +3,11 @@ main = "src/index.ts"
 compatibility_date = "2025-06-01"
 compatibility_flags = ["nodejs_compat"]
 
+# better-auth nests @better-auth/drizzle-adapter; Wrangler can't resolve
+# drizzle-orm from that nested package without an explicit alias.
+[alias]
+"drizzle-orm" = "./node_modules/drizzle-orm"
+
 [vars]
 APP_URL = "http://localhost:5173"
 COOKIE_DOMAIN = "localhost"
@@ -26,8 +31,8 @@ preview_bucket_name = "docket-documents-dev"
 
 [env.staging]
 name = "docket-api-staging"
-vars = { APP_URL = "https://baseer-staging.humza-butt.space", COOKIE_DOMAIN = "baseer-staging.humza-butt.space", BETTER_AUTH_URL = "https://baseer-api-staging.humza-butt.space" }
-routes = [{ pattern = "baseer-api-staging.humza-butt.space", custom_domain = true }]
+vars = { APP_URL = "https://jobtracker-staging.baseer.co.uk", COOKIE_DOMAIN = "jobtracker-staging.baseer.co.uk", BETTER_AUTH_URL = "https://jobtracker-api-staging.baseer.co.uk" }
+routes = [{ pattern = "jobtracker-api-staging.baseer.co.uk", custom_domain = true }]
 
 [[env.staging.r2_buckets]]
 binding = "DOCUMENTS"
@@ -39,8 +44,8 @@ bucket_name = "docket-documents-staging"
 
 [env.production]
 name = "docket-api"
-vars = { APP_URL = "https://baseer.humza-butt.space", COOKIE_DOMAIN = "baseer.humza-butt.space", BETTER_AUTH_URL = "https://baseer-api.humza-butt.space" }
-routes = [{ pattern = "baseer-api.humza-butt.space", custom_domain = true }]
+vars = { APP_URL = "https://jobtracker.baseer.co.uk", COOKIE_DOMAIN = "jobtracker.baseer.co.uk", BETTER_AUTH_URL = "https://jobtracker-api.baseer.co.uk" }
+routes = [{ pattern = "jobtracker-api.baseer.co.uk", custom_domain = true }]
 
 [[env.production.r2_buckets]]
 binding = "DOCUMENTS"
