@@ -43,6 +43,13 @@ Every `POST /api/applications` sends a bespoke email:
 
 Fires for board create, API create, and `npm run data:import` (same endpoint). Email is sent via `waitUntil` so create still succeeds if Resend fails.
 
+### Status change
+
+Every `PATCH /api/applications/:id` that changes `status` (board drag, detail save, Claude Code) emails the list:
+
+- Subject: `Docket: {role} at {company} → {newStatus}`
+- Body: previous → new status plus full job details
+
 ### Reminder digests
 
 Production/staging Workers run a cron at **08:00 UTC** (`0 8 * * *`) that emails incomplete reminders due today or overdue.

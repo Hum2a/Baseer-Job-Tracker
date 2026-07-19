@@ -57,17 +57,12 @@ async function sendResendEmail(
   return { ok: true, id: data.id };
 }
 
-/** Notify when Claude (or anyone) logs a new application. */
-export async function sendApplicationCreatedEmail(
-  env: Env,
+function applicationDetailFields(
   app: Application,
-  recipients: string[],
-): Promise<SendResult> {
-  const detailUrl = `${env.APP_URL.replace(/\/$/, "")}/applications/${app.id}`;
-  const headline = `You've been applied for ${app.roleTitle}`;
-  const subject = `Docket: ${headline} at ${app.company}`;
-
-  const fields: { label: string; value: string }[] = [
+  extra: { label: string; value: string }[] = [],
+): { label: string; value: string }[] {
+  return [
+    ...extra,
     { label: "Company", value: app.company },
     { label: "Role", value: app.roleTitle },
     { label: "Industry", value: app.industry },
@@ -80,8 +75,69 @@ export async function sendApplicationCreatedEmail(
       value: app.appliedDate ? formatDate(new Date(app.appliedDate)) : "—",
     },
     { label: "Job URL", value: app.jobUrl?.trim() ? app.jobUrl : "—" },
-    { label: "Logged", value: formatDateTime(new Date(app.createdAt)) },
   ];
+}
+
+function applicationEmailHtml(opts: {
+  headline: string;
+  company: string;
+  app: Application;
+  fields: { label: string; value: string }[];
+  detailUrl: string;
+  footer: string;
+}): string {
+  const rowsHtml = opts.fields
+    .map(
+      (f) => `<tr>
+      <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#5a6578;font-size:13px;width:140px;vertical-align:top;">${escapeHtml(f.label)}</td>
+      <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#1a2332;font-size:14px;vertical-align:top;">${
+        f.label === "Job URL" && opts.app.jobUrl?.trim()
+          ? `<a href="${escapeHtml(opts.app.jobUrl)}" style="color:#0f6e56;">${escapeHtml(opts.app.jobUrl)}</a>`
+          : escapeHtml(f.value)
+      }</td>
+    </tr>`,
+    )
+    .join("");
+
+  return `<!DOCTYPE html>
+<html>
+<body style="margin:0;padding:0;background:#f3f6f9;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:#1a2332;">
+  <div style="max-width:560px;margin:0 auto;padding:32px 16px;">
+    <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#0f6e56;font-weight:600;margin-bottom:12px;">Docket</div>
+    <h1 style="margin:0 0 8px;font-size:24px;line-height:1.25;font-weight:700;">${escapeHtml(opts.headline)}</h1>
+    <p style="margin:0 0 24px;font-size:16px;color:#5a6578;">at <strong style="color:#1a2332;">${escapeHtml(opts.company)}</strong></p>
+    <div style="background:#ffffff;border:1px solid #d5dde8;border-radius:12px;overflow:hidden;">
+      <div style="padding:14px 16px;background:#e8f5ef;border-bottom:1px solid #d5dde8;font-size:13px;font-weight:600;color:#0f6e56;">
+        Job details
+      </div>
+      <table style="border-collapse:collapse;width:100%;">${rowsHtml}</table>
+    </div>
+    <p style="margin:28px 0 0;">
+      <a href="${escapeHtml(opts.detailUrl)}"
+         style="display:inline-block;background:#0f6e56;color:#ffffff;text-decoration:none;padding:12px 18px;border-radius:8px;font-size:14px;font-weight:600;">
+        Open application in Docket
+      </a>
+    </p>
+    <p style="margin:20px 0 0;font-size:12px;color:#5a6578;line-height:1.5;">
+      ${escapeHtml(opts.footer)}
+    </p>
+  </div>
+</body>
+</html>`;
+}
+
+/** Notify when Claude (or anyone) logs a new application. */
+export async function sendApplicationCreatedEmail(
+  env: Env,
+  app: Application,
+  recipients: string[],
+): Promise<SendResult> {
+  const detailUrl = `${env.APP_URL.replace(/\/$/, "")}/applications/${app.id}`;
+  const headline = `You've been applied for ${app.roleTitle}`;
+  const subject = `Docket: ${headline} at ${app.company}`;
+  const fields = applicationDetailFields(app, [
+    { label: "Logged", value: formatDateTime(new Date(app.createdAt)) },
+  ]);
 
   const text = [
     headline,
@@ -93,50 +149,65 @@ export async function sendApplicationCreatedEmail(
     `Open in Docket: ${detailUrl}`,
   ].join("\n");
 
-  const rowsHtml = fields
-    .map(
-      (f) => `<tr>
-      <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#5a6578;font-size:13px;width:140px;vertical-align:top;">${escapeHtml(f.label)}</td>
-      <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#1a2332;font-size:14px;vertical-align:top;">${
-        f.label === "Job URL" && app.jobUrl?.trim()
-          ? `<a href="${escapeHtml(app.jobUrl)}" style="color:#0f6e56;">${escapeHtml(app.jobUrl)}</a>`
-          : escapeHtml(f.value)
-      }</td>
-    </tr>`,
-    )
-    .join("");
-
-  const html = `<!DOCTYPE html>
-<html>
-<body style="margin:0;padding:0;background:#f3f6f9;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;color:#1a2332;">
-  <div style="max-width:560px;margin:0 auto;padding:32px 16px;">
-    <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:#0f6e56;font-weight:600;margin-bottom:12px;">Docket</div>
-    <h1 style="margin:0 0 8px;font-size:24px;line-height:1.25;font-weight:700;">${escapeHtml(headline)}</h1>
-    <p style="margin:0 0 24px;font-size:16px;color:#5a6578;">at <strong style="color:#1a2332;">${escapeHtml(app.company)}</strong></p>
-    <div style="background:#ffffff;border:1px solid #d5dde8;border-radius:12px;overflow:hidden;">
-      <div style="padding:14px 16px;background:#e8f5ef;border-bottom:1px solid #d5dde8;font-size:13px;font-weight:600;color:#0f6e56;">
-        Job details
-      </div>
-      <table style="border-collapse:collapse;width:100%;">${rowsHtml}</table>
-    </div>
-    <p style="margin:28px 0 0;">
-      <a href="${escapeHtml(detailUrl)}"
-         style="display:inline-block;background:#0f6e56;color:#ffffff;text-decoration:none;padding:12px 18px;border-radius:8px;font-size:14px;font-weight:600;">
-        Open application in Docket
-      </a>
-    </p>
-    <p style="margin:20px 0 0;font-size:12px;color:#5a6578;line-height:1.5;">
-      This notification was sent because a new application was logged in Docket
-      (including updates made via Claude Code or import).
-    </p>
-  </div>
-</body>
-</html>`;
+  const html = applicationEmailHtml({
+    headline,
+    company: app.company,
+    app,
+    fields,
+    detailUrl,
+    footer:
+      "This notification was sent because a new application was logged in Docket (including updates made via Claude Code or import).",
+  });
 
   return sendResendEmail(
     env,
     { to: recipients, subject, html, text },
     "application-email",
+  );
+}
+
+/** Notify when an application status changes (board drag, detail edit, API). */
+export async function sendApplicationStatusUpdatedEmail(
+  env: Env,
+  app: Application,
+  previousStatus: string,
+  recipients: string[],
+): Promise<SendResult> {
+  const detailUrl = `${env.APP_URL.replace(/\/$/, "")}/applications/${app.id}`;
+  const headline = `Status updated to ${app.status}`;
+  const subject = `Docket: ${app.roleTitle} at ${app.company} → ${app.status}`;
+  const fields = applicationDetailFields(app, [
+    { label: "Previous status", value: previousStatus },
+    { label: "New status", value: app.status },
+    { label: "Updated", value: formatDateTime(new Date(app.updatedAt)) },
+  ]);
+
+  const text = [
+    headline,
+    `${app.roleTitle} at ${app.company}`,
+    "",
+    `${previousStatus} → ${app.status}`,
+    "",
+    "Job details",
+    ...fields.map((f) => `${f.label}: ${f.value}`),
+    "",
+    `Open in Docket: ${detailUrl}`,
+  ].join("\n");
+
+  const html = applicationEmailHtml({
+    headline,
+    company: app.company,
+    app,
+    fields,
+    detailUrl,
+    footer:
+      "This notification was sent because an application status changed in Docket (board, detail page, or Claude Code).",
+  });
+
+  return sendResendEmail(
+    env,
+    { to: recipients, subject, html, text },
+    "status-email",
   );
 }
 

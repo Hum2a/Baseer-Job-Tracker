@@ -10,7 +10,10 @@ import { withOwner } from "../middleware/owner";
 import { withOwnerRls } from "../db/client";
 import { applications } from "../db/schema";
 import { serializeApplication } from "../lib/serialize";
-import { sendApplicationCreatedEmail } from "../lib/resend";
+import {
+  sendApplicationCreatedEmail,
+  sendApplicationStatusUpdatedEmail,
+} from "../lib/resend";
 import { resolveNotificationRecipients } from "../lib/notification-recipients";
 
 const app = new Hono<{ Bindings: Env; Variables: AppVariables }>();
@@ -81,6 +84,16 @@ app.patch("/:id", async (c) => {
   const id = c.req.param("id");
   const body = updateApplicationSchema.parse(await c.req.json());
 
+  const previous = await withOwnerRls(db, userId, (tx) =>
+    tx
+      .select()
+      .from(applications)
+      .where(and(eq(applications.id, id), eq(applications.ownerId, userId)))
+      .limit(1),
+  );
+  const before = previous[0];
+  if (!before) return c.json({ error: "Not found" }, 404);
+
   const patch: Partial<typeof applications.$inferInsert> = {
     updatedAt: new Date(),
   };
@@ -105,7 +118,28 @@ app.patch("/:id", async (c) => {
   );
   const row = rows[0];
   if (!row) return c.json({ error: "Not found" }, 404);
-  return c.json({ data: serializeApplication(row) });
+
+  const updated = serializeApplication(row);
+  const statusChanged =
+    body.status !== undefined && body.status !== before.status;
+
+  if (statusChanged) {
+    const recipients = await withOwnerRls(db, userId, (tx) =>
+      resolveNotificationRecipients(tx, c.env),
+    );
+    c.executionCtx.waitUntil(
+      sendApplicationStatusUpdatedEmail(
+        c.env,
+        updated,
+        before.status,
+        recipients,
+      ).then((result) => {
+        console.log("[status-email]", updated.id, before.status, "→", updated.status, result);
+      }),
+    );
+  }
+
+  return c.json({ data: updated });
 });
 
 app.delete("/:id", async (c) => {
